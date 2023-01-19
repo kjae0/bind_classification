@@ -2,6 +2,7 @@
 *.jpg
 *.pt
 *.csv
+*.xlsx
 saved_model/
 wrong_imgs/
 gradcam/
