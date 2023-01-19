@@ -1,0 +1,8 @@
+*.png
+*.jpg
+*.pt
+*.csv
+saved_model/
+wrong_imgs/
+gradcam/
+inference_result/
