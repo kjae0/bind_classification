@@ -170,8 +170,8 @@ def train(opt):
         n_iter = 0
         for x, y, _, _ in tqdm(train_dataloader, total=len(train_dataloader)):
             model.train()
-            x = x.to(opt.device)
-            y = y.to(opt.device)
+            x = x.to(opt.device).float()
+            y = y.to(opt.device).long()
 
             pred = model(x)
             loss = criterion(pred, y)
@@ -261,6 +261,9 @@ if __name__ == '__main__':
     
     opt = parser.parse_args()
     model = train(opt)
-    
+    model_dir = f"./saved_model/{opt.name}"
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
+    torch.save(model.state_dict(), os.path.join(model_dir, f"{opt.n_epochs}_{opt.name}.pt"))
     
     

@@ -88,10 +88,12 @@ def inference(opt):
                                 batch_size=opt.batch_size,
                                 shuffle=False,
                                 drop_last=False)
+    
+    model = models.EfficientNetB3()
+    model.load_state_dict(torch.load(opt.model_dir))
+    model = model.to(opt.device)
 
-    # model = torch.load(opt.model_dir).to(opt.device)
-    model = models.EfficientNetB3().to(opt.device)
-
+    
     print(f"gpu -> {opt.n_gpu}")
     if torch.cuda.device_count() < opt.n_gpu:
         raise ValueError("Wrong n_gpu input")
