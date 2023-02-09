@@ -61,8 +61,8 @@ def evaluate(model, dataloader, args):
 
 def inference(opt):
     import os
-    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-    os.environ["CUDA_VISIBLE_DEVICES"]=opt.gpu_number
+    # os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
+    # os.environ["CUDA_VISIBLE_DEVICES"]=opt.gpu_number
     
     utils.seed_everything(seed=opt.seed)
     root_dir = opt.img_dir
