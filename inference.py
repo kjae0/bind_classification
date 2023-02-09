@@ -12,12 +12,19 @@ from sklearn.metrics import f1_score
 import os
 import pandas as pd
 import numpy as np
-import dataset
-import models
-import utils
 import cv2
-import grad_cam
 import argparse
+
+try:
+    import dataset
+    import models
+    import utils
+    import grad_cam
+except:
+    from bind_classification import dataset
+    from bind_classification import models
+    from bind_classification import utils
+    from bind_classification import grad_cam
 
 def evaluate(model, dataloader, args):
     with torch.no_grad():
@@ -50,6 +57,7 @@ def evaluate(model, dataloader, args):
                     wrong.append((file_name[idx], dset_type[idx]))
                     confidence.append(proba[idx, y[idx]].cpu().item())
     return total, correct.item(), label_0_total, label_0_correct, label_1_total, label_1_correct, wrong, confidence     
+
 
 def inference(opt):
     import os
