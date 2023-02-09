@@ -70,10 +70,14 @@ def inference(opt):
     folders = tree_dir[0][1]
     datasets = []
 
+    new_transform = nn.Sequential(
+      transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)))
+    new_transform = torch.jit.script(new_transform)
+
     transform = transforms.Compose([
-        transforms.ToTensor(),
         transforms.Resize(opt.image_size),
-        transforms.Normalize(0.5, 0.5, 0.5)
+        transforms.ToTensor(),
+        # transforms.Normalize(0.5, 0.5, 0.5)
     ])
         
     for folder in folders:
@@ -117,6 +121,7 @@ def inference(opt):
         model.eval()
         for x, y, file_name, dset_type in tqdm(dataloader, total=len(dataloader)):
             x = x.to(opt.device)
+            x = new_transform(x)
             pred = model(x)
             pred = torch.argmax(pred, dim=1).cpu().detach()
             preds.extend([i.item() for i in pred])
